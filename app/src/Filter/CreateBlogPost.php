@@ -28,7 +28,6 @@ class CreateBlogPost extends FilterDto
 
     public function filterDefinition(): Definition
     {
-
     }
 
     public function mappingSchema(): array

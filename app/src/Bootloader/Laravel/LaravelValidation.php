@@ -22,7 +22,9 @@ class LaravelValidation implements ValidationInterface
         }
 
         $validator = new LaravelValidator(
-            $this->factory, $data, $rules
+            $this->factory,
+            $data,
+            $rules
         );
 
         return $validator->withContext($context);

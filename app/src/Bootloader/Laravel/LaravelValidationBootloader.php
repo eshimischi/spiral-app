@@ -22,7 +22,7 @@ final class LaravelValidationBootloader extends Bootloader
     {
         $provider->register(
             FilterDefinition::class,
-            static fn(LaravelValidation $validation) => $validation
+            static fn (LaravelValidation $validation) => $validation
         );
     }
 
