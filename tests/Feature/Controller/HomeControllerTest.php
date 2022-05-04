@@ -15,29 +15,65 @@ use Tests\TestCase;
 
 class HomeControllerTest extends TestCase
 {
-    public function testDefaultActionWorks(): void
+    public function testCreateUser(): void
     {
-        $this
-            ->fakeHttp()
-            ->get('/')
-            ->assertOk()
-            ->assertBodyContains('Welcome to Spiral Framework');
+        $http = $this->fakeHttp();
+        $response = $http
+            ->post(
+                uri: '/createUser.html',
+                data: [
+                    'username' => 'john_smith',
+                    'first_name' => 'John',
+                    'last_name' => 'Smith',
+                    'password' => 'secret',
+                    'utm_id' => '34wmrn_34n25nj3_4k23bn_4dkj2n34',
+                    'utm_source' => 'google',
+                    'utm_medium' => 'cpc',
+                    'utm_term' => 'search',
+                    'tags' => [
+                        'first' => [
+                            'name' => 'Admin',
+                            'role' => 'admin',
+                        ],
+                        'second' => [
+                            'name' => 'Manager',
+                            'role' => 'manager',
+                        ],
+                    ],
+                ],
+                files: [
+                    'avatar' => $http->getFileFactory()->createImage('avatar.jpg'),
+                ]
+            );
+
+        var_dump((string)$response->getOriginalResponse()->getBody());
     }
 
-    public function testDefaultActionWithRuLocale(): void
+    public function testCreateBlogPost(): void
     {
-        $this
-            ->fakeHttp()
-            ->withHeader('accept-language', 'ru')
-            ->get('/')
-            ->assertOk()
-            ->assertBodyContains('Вас приветствует Spiral Framework');
-    }
+        $http = $this->fakeHttp();
+        $response = $http
+            ->post(
+                uri: '/createPost.html',
+                data: [
+                    'title' => 'Hello world',
+                    'description' => 'Hello world',
+                    'tags' => [
+                        [
+                            'tag' => 'php',
+                            'title' => 'PHP language',
+                        ],
+                        [
+                            'tag' => 'go',
+                            'title' => 'Golang',
+                        ],
+                    ],
+                ],
+                files: [
+                    'image' => $http->getFileFactory()->createImage('image.jpg'),
+                ]
+            );
 
-    public function testInteractWithConsole(): void
-    {
-        $output = $this->runCommand('views:reset');
-
-        $this->assertStringContainsString('cache', $output);
+        var_dump((string)$response->getOriginalResponse()->getBody());
     }
 }

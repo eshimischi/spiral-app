@@ -1,28 +1,16 @@
 <?php
 
-/**
- * This file is part of Spiral package.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Job\Ping;
+use App\Filter\CreateBlogPost;
+use App\Filter\CreateUser;
 use Spiral\Prototype\Traits\PrototypeTrait;
-use Spiral\Queue\QueueInterface;
 
 class HomeController
 {
     use PrototypeTrait;
-
-    public function __construct(
-        private QueueInterface $queue,
-    ) {
-    }
 
     /**
      * @return string
@@ -32,25 +20,15 @@ class HomeController
         return $this->views->render('home.dark.php');
     }
 
-    /**
-     * Example of exception page.
-     *
-     * @throws \Error
-     */
-    public function exception(): void
+    public function createUser(CreateUser $filter): array
     {
-        echo $undefined;
+        dump($filter);
+
+        return [];
     }
 
-    /**
-     * @return string
-     */
-    public function ping(): string
+    public function createPost(CreateBlogPost $filter): array
     {
-        $jobID = $this->queue->push(Ping::class, [
-            'value' => 'hello world',
-        ]);
-
-        return sprintf('Job ID: %s', $jobID);
+        return $filter->filteredData();
     }
 }

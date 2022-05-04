@@ -16,8 +16,6 @@ use Spiral\Scaffolder\Bootloader as Scaffolder;
 use Spiral\Stempler\Bootloader as Stempler;
 use Spiral\Cycle\Bootloader as CycleBridge;
 use Spiral\RoadRunnerBridge\Bootloader as RoadRunnerBridge;
-use Spiral\Validation\Bootloader\ValidationBootloader;
-use Spiral\Views\Bootloader\ViewsBootloader;
 
 class App extends Kernel
 {
@@ -28,11 +26,11 @@ class App extends Kernel
     protected const LOAD = [
 
         // RoadRunner
-        RoadRunnerBridge\CacheBootloader::class,
-        RoadRunnerBridge\GRPCBootloader::class,
-        RoadRunnerBridge\HttpBootloader::class,
-        RoadRunnerBridge\QueueBootloader::class,
-        RoadRunnerBridge\RoadRunnerBootloader::class,
+//        RoadRunnerBridge\CacheBootloader::class,
+//        RoadRunnerBridge\GRPCBootloader::class,
+//        RoadRunnerBridge\HttpBootloader::class,
+//        RoadRunnerBridge\QueueBootloader::class,
+//        RoadRunnerBridge\RoadRunnerBootloader::class,
 
         // Base extensions
         DotEnv\DotenvBootloader::class,
@@ -40,6 +38,8 @@ class App extends Kernel
 
         // Application specific logs
         Bootloader\LoggingBootloader::class,
+        Bootloader\Laravel\LaravelValidationBootloader::class,
+        ValidationBootloader::class,
 
         // Core Services
         Framework\SnapshotsBootloader::class,
@@ -47,7 +47,7 @@ class App extends Kernel
 
         // Security and validation
         Framework\Security\EncrypterBootloader::class,
-        ValidationBootloader::class,
+        //Framework\Security\ValidationBootloader::class,
         Framework\Security\FiltersBootloader::class,
         Framework\Security\GuardBootloader::class,
 
@@ -83,7 +83,7 @@ class App extends Kernel
         // CycleBridge\ValidationBootloader::class,
 
         // Views and view translation
-        ViewsBootloader::class,
+        //Framework\Views\ViewsBootloader::class,
         Framework\Views\TranslatedCacheBootloader::class,
 
 
@@ -95,12 +95,11 @@ class App extends Kernel
         Scaffolder\ScaffolderBootloader::class,
 
         // Debug and debug extensions
-        Framework\ExceptionHandlerBootloader::class,
         Framework\DebugBootloader::class,
         Framework\Debug\LogCollectorBootloader::class,
         Framework\Debug\HttpCollectorBootloader::class,
 
-        RoadRunnerBridge\CommandBootloader::class,
+        // RoadRunnerBridge\CommandBootloader::class,
     ];
 
     /*
